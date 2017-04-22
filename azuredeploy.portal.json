@@ -21,7 +21,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/anthonychu/slack-user-change-alerts/master/azuredeploy.json",
+                    "uri": "https://raw.githubusercontent.com/anthonychu/azure-functions-raffle/master/azuredeploy.json",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
