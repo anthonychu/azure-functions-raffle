@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Raffle Sign Up</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <style>
+  		@-ms-viewport     { width: device-width; }
+  		@-o-viewport      { width: device-width; }
+  		@viewport         { width: device-width; }
+      
+      [v-cloak] {
+        display: none;
+      }
+  	</style>
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container" id="app" v-cloak>
+
+      <form class="form-signin" v-on:submit.prevent="onSubmit" v-if="!successfullyCompleted">
+        <h2 class="form-signin-heading">Raffle!</h2>
+        <label for="inputName" class="sr-only">Name</label>
+        <input type="text" id="inputName" class="form-control" placeholder="Name" v-model="name" required autofocus>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" v-model="email" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Raffle</button>
+      </form>
+      <div id="success" v-else>
+        <h2>You have entered the raffle.</h2>
+        <h3>Good luck!</h3>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.5.2/superagent.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          email: '',
+          name: '',
+          successfullyCompleted: false
+        },
+        methods: {
+          onSubmit: function(event) {
+            superagent
+              .post('/api/participants')
+              .send({ PartitionKey: this.email, Name: this.name })
+              .end(function(err, res) {
+                if (err) {
+                  alert("failed");
+                } else {
+                  this.successfullyCompleted = true;
+                }
+              }.bind(this));
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
