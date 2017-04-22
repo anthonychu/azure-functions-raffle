@@ -80,6 +80,7 @@
           selectWinner: function(event) {
             var winnerIndex = Math.floor(Math.random() * this.participants.length);
             this.winner = this.participants[winnerIndex];
+            this.participants.splice(winnerIndex, 1);
           }
         }
       });
